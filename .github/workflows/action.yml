@@ -1,0 +1,23 @@
+name: Action Name
+on:
+  # schedule:
+  #   - cron: 0 7 * * 4 # 매주 목요일 16:00 PM (KST)
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    name: Action Name
+    steps:  
+
+      - uses: actions/checkout@v3    
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
+
+      - name: Run Scripts
+        run: make command
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
